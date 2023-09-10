@@ -1,5 +1,6 @@
 
 library(xgboost)
+library(caret)
 library(DiagrammeR)
 
 #### near zero variance and 0.75 correlation cutoff
