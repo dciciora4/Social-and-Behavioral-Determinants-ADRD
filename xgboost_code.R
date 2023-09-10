@@ -2,6 +2,7 @@
 library(xgboost)
 library(caret)
 library(DiagrammeR)
+library(tidyverse)
 
 #### near zero variance and 0.75 correlation cutoff
 df_cor <- all_data %>% 
