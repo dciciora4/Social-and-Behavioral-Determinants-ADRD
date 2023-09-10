@@ -225,17 +225,7 @@ xgb_train_5_cut
 
 ### cut tune xgboost
 
-# xgb_params_cut_tune = list(
-#   booster = "gbtree",
-#   eta = 0.025,
-#   gamma = 4,
-#   max_depth = 3,
-#   min_child_weight = 3,
-#   subsample = 0.5,
-#   colsample_bytree = 0.4,
-#   objective = "reg:squarederror",
-#   eval_metric = "rmse"
-# )
+
 
 
 xgb_params_cut_tune = list(
@@ -264,34 +254,6 @@ xgb_model_cut_tune <- xgb.train(
 
 xgb_model_cut_tune
 
-##### xgb.Booster
-# raw: 2.2 Mb 
-# call:
-#   xgb.train(params = xgb_params_cut_tune, data = alz_xgboost_train_cut, 
-#             nrounds = 5000, watchlist = watchlist_cut_tune, early_stopping_rounds = 50)
-# params (as set within xgb.train):
-#   booster = "gbtree", eta = "0.005", gamma = "4", max_depth = "4", min_child_weight = "3", subsample = "0.75", colsample_bytree = "0.6", objective = "reg:squarederror", eval_metric = "rmse", validate_parameters = "TRUE"
-# xgb.attributes:
-#   best_iteration, best_msg, best_ntreelimit, best_score, niter
-# callbacks:
-#   cb.print.evaluation(period = print_every_n)
-# cb.evaluation.log()
-# cb.early.stop(stopping_rounds = early_stopping_rounds, maximize = maximize, 
-#               verbose = verbose)
-# # of features: 42 
-# niter: 1377
-# best_iteration : 1327 
-# best_ntreelimit : 1327 
-# best_score : 1.453533 
-# best_msg : [1327]	train-rmse:1.226055	test-rmse:1.453533 
-# nfeatures : 42 
-# evaluation_log:
-#   iter train_rmse test_rmse
-# 1  11.420422 11.325941
-# 2  11.365035 11.270436
-# ---                          
-#   1376   1.211157  1.453972
-# 1377   1.211048  1.453946
 
 #model importance
 importance_cut_tune <- xgb.importance(feature_names = colnames(alz_train_x_cut), model = xgb_model_cut_tune)
