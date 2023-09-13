@@ -7,7 +7,7 @@ library(tidyverse)
 #### near zero variance and 0.75 correlation cutoff
 df_cor <- all_data %>% 
   select( -c(stcofips, st, state, st_abbr, county, alz_spending, pop, glyphosate, dicamba, eal_score,
-             resl_score, veteran, vacant, resp, ptsdf, ozone, dslpm))
+             resl_score, veteran, vacant, resp, ptsdf, ozone, dslpm, metro))
 
 cormat_df <- round(cor(df_cor, use = "pairwise.complete.obs"), 2)
 
