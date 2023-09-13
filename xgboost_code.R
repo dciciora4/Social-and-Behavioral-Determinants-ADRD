@@ -85,13 +85,14 @@ importance_rf <- as_tibble(imp_rf) %>%
 importance_plot_rf <- ggplot(importance_rf, aes(x = Gain, y = reorder(Feature, Gain)))+
   geom_col(fill = "grey", color = "black")+
   theme_classic()+
-  labs(x = "Importance (Gain)", y = "Feature")+
+  labs(x = "Increase in Node Purity", y = "Feature")+
   ggtitle("Feature Importance")+
   theme(plot.title = element_text(hjust = 0.5),
         axis.text=element_text(size=12),
-        axis.title=element_text(size=12))+
-  scale_x_continuous(labels = scales::percent)
+        axis.title=element_text(size=12))
 importance_plot_rf
+
+
 
 ############################################################################
 ############################################################################
