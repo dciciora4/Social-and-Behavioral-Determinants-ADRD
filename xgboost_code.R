@@ -16,7 +16,7 @@ remove_cols
 
 findCorrelation(cormat_df, cutoff = 0.75, names = T, verbose = T)
 
-###hospital, incarcerate, syphyllis, teeth, housingcost, smoking, hbp, nocomputer, hincome, snap
+
 
 str(all_data)
 
