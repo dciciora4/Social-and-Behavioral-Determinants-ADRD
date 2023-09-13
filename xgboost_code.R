@@ -36,6 +36,69 @@ alz_model_data_complete_cut <- alz_model_cut %>%
 
 #encoding categorical metro
 
+##################                              ############################
+##################Random Forest Added by Request############################
+##################                              ############################
+############################################################################
+
+
+
+install.packages("randomForest")
+library(randomForest)
+
+# Build the random forest regression model
+set.seed(500)
+rffit <- randomForest(
+  formula = alzheimers_dementia ~ .,
+  data = alz_train_cut,
+  ntree = 2000,
+  mtry = 5,
+  importance = TRUE
+)
+
+# Make predictions on the testing data
+predictions_rf <- predict(rffit, newdata = alz_test_cut)
+
+# Calculate the RMSE and R-squared
+predicted_rf = predict(rffit, newdata = alz_test_cut )
+residuals_rf = alz_test_y_cut - predicted_rf
+RMSE_rf = sqrt(mean(residuals^2))
+cat('The root mean square error of the test data is ', round(RMSE_rf,3),'\n')
+
+y_test_mean_rf = mean(alz_test_y_cut)
+# Calculate total sum of squares
+tss_rf =  sum((alz_test_y_cut - y_test_mean_rf)^2 )
+# Calculate residual sum of squares
+rss_rf =  sum(residuals_rf^2)
+# Calculate R-squared
+rsq_rf  =  1 - (rss_rf/tss_rf)
+cat('The R-square of the test data is ', round(rsq_rf,3), '\n')
+
+imp_rf <- as.data.frame(importance(rffit))
+imp_rf$Var.Names <- row.names(imp_rf)
+importance_rf <- as_tibble(imp_rf) %>% 
+  rename(Gain = `IncNodePurity`,
+         Feature = Var.Names) %>% 
+  arrange(desc(Gain)) %>% 
+  filter(row_number() <= 15 )
+
+importance_plot_rf <- ggplot(importance_rf, aes(x = Gain, y = reorder(Feature, Gain)))+
+  geom_col(fill = "grey", color = "black")+
+  theme_classic()+
+  labs(x = "Importance (Gain)", y = "Feature")+
+  ggtitle("Feature Importance")+
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=12))+
+  scale_x_continuous(labels = scales::percent)
+importance_plot_rf
+
+############################################################################
+############################################################################
+############################################################################
+############################################################################
+
+
 
 #split train and test 80% and 20%
 set.seed(0978)
