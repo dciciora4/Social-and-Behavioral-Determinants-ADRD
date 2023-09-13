@@ -106,7 +106,7 @@ rsq  =  1 - (rss/tss)
 cat('The R-square of the test data is ', round(rsq,3), '\n')
 
 #################################
-
+###now tuning the dataset. iterative grid search starting with primary tuning of eta and max_depth
 set.seed=(777)
 xgb_grid_1_cut = expand.grid(
   nrounds = c(5000),
@@ -140,7 +140,7 @@ xgb_train_1_cut = train(
 
 
 
-
+#now tuning min child weight with parameters from search 1
 xgb_grid_2_cut <- expand.grid(
   nrounds = xgb_train_1_cut$bestTune$nrounds,
   eta = xgb_train_1_cut$bestTune$eta,
@@ -161,7 +161,7 @@ xgb_train_2_cut = train(
   method = "xgbTree"
 )
 
-
+#now tuning subsample and col sample by tree using parameters from search 1 and 2
 xgb_grid_3_cut <- expand.grid(
   nrounds = xgb_train_2_cut$bestTune$nrounds,
   eta = xgb_train_2_cut$bestTune$eta,
@@ -180,7 +180,7 @@ xgb_train_3_cut = train(
   method = "xgbTree"
 )
 
-
+#now tuning gamma using parameters from search 1, 2, and 3
 xgb_grid_4_cut <- expand.grid(
   nrounds = xgb_train_3_cut$bestTune$nrounds,
   eta = xgb_train_3_cut$bestTune$eta,
@@ -201,7 +201,7 @@ xgb_train_4_cut = train(
 )
 
 
-
+#now further tuning of eta using parameters from searches 1-4
 xgb_grid_5_cut <- expand.grid(
   nrounds = xgb_train_4_cut$bestTune$nrounds,
   eta = c(0.001, 0.005,0.01, 0.015, 0.025, 0.05, 0.1),
@@ -227,7 +227,7 @@ xgb_train_5_cut
 
 ### cut tune xgboost
 
-
+###chosen parameters
 
 
 xgb_params_cut_tune = list(
@@ -314,7 +314,7 @@ elog_tune_cut <- ggplot(elog_tune, aes(x = iter, y= RMSE, group = Data))+
   ggtitle("Learning Curves for Training and Testing Data")+
   theme(plot.title = element_text(hjust = 0.5))
 
-
+#learning curves
 elog_tune_cut
 
 
